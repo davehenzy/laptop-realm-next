@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Phone, Mail, ChevronDown, Search, Heart, ShoppingCart, User, Menu, Monitor, X, ChevronRight, ArrowRightLeft } from 'lucide-react';
+import { Phone, Mail, ChevronDown, Search, Heart, ShoppingCart, User, Menu, Monitor, X, ChevronRight, ArrowRightLeft, Sparkles } from 'lucide-react';
 import { CATEGORIES, BRANDS, LATEST_ARRIVALS, NEW_YEAR_SPECIALS, APPLE_STORE } from '../constants';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -301,7 +301,9 @@ const Header: React.FC = () => {
           <nav className="hidden xl:flex items-center space-x-6 text-gray-700 font-medium lg:order-2 lg:mr-8">
             <Link href="/" className="hover:text-[#333399]">Home</Link>
             <Link href="/shop" className="hover:text-[#333399]">Warehouse</Link>
-            <Link href="/shop" className="hover:text-[#333399]">Premium Items</Link>
+            <Link href="/laptop-finder" className="text-[#333399] font-black flex items-center gap-1.5 hover:opacity-80 transition-opacity">
+              <Sparkles size={16} className="animate-pulse" /> Laptop Finder
+            </Link>
             <Link href="/contact" className="hover:text-[#333399]">Contact</Link>
             <Link href="/blog" className="hover:text-[#333399]">Blog</Link>
           </nav>
@@ -339,7 +341,11 @@ const Header: React.FC = () => {
                   <ul className="space-y-4 font-semibold text-gray-700">
                       <li><button onClick={() => handleNavClick('/')} className="block hover:text-[#333399] hover:translate-x-1 transition-transform">Home</button></li>
                       <li><button onClick={() => handleNavClick('/shop')} className="block hover:text-[#333399] hover:translate-x-1 transition-transform">Warehouse</button></li>
-                      <li><button onClick={() => handleNavClick('/shop')} className="block hover:text-[#333399] hover:translate-x-1 transition-transform">Premium Items</button></li>
+                      <li>
+                        <button onClick={() => handleNavClick('/laptop-finder')} className="flex items-center gap-2 text-[#333399] font-black hover:translate-x-1 transition-transform">
+                          <Sparkles size={18} /> Laptop Finder
+                        </button>
+                      </li>
                       <li><button onClick={() => handleNavClick('/contact')} className="block hover:text-[#333399] hover:translate-x-1 transition-transform">Contact</button></li>
                       <li><button onClick={() => handleNavClick('/blog')} className="block hover:text-[#333399] hover:translate-x-1 transition-transform">Blog</button></li>
                   </ul>

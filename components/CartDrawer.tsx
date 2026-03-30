@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { X, Minus, Plus, Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
+import { X, Minus, Plus, Trash2, ArrowRight, ShoppingBag, Clock } from 'lucide-react';
 import { optimizeImage } from '../constants';
 import { useAppContext } from '../context/AppContext';
 
@@ -26,6 +26,22 @@ const CartDrawer: React.FC = () => {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isCartOpen]);
 
+  const [timeLeft, setTimeLeft] = React.useState(600); // 10 minutes in seconds
+
+  React.useEffect(() => {
+    if (!isCartOpen) return;
+    
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  }, [isCartOpen]);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  const timerString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
   return (
     <>
       <div 
@@ -46,7 +62,20 @@ const CartDrawer: React.FC = () => {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-5 space-y-6">
+          <div className="flex-1 overflow-y-auto p-0 flex flex-col">
+            {cart.length > 0 && (
+               <div className="bg-[#fff9e6] border-b border-[#ffeeba] px-5 py-3 flex items-center gap-3 animate-pulse">
+                  <div className="w-8 h-8 rounded-full bg-[#fbbf24] flex items-center justify-center text-white flex-shrink-0 shadow-sm">
+                     <Clock size={16} strokeWidth={3} />
+                  </div>
+                  <div className="flex-1">
+                     <p className="text-[10px] uppercase font-black tracking-widest text-[#856404] leading-tight">Warehouse Reservation Locked</p>
+                     <p className="text-xs font-bold text-[#856404]">Your items are secured for <span className="text-sm font-black text-[#fbbf24] tabular-nums">{timerString}</span></p>
+                  </div>
+               </div>
+            )}
+
+            <div className="p-5 space-y-6 flex-1">
             {cart.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center text-gray-500">
                 <div className="bg-gray-100 p-6 rounded-full mb-4">
@@ -107,6 +136,7 @@ const CartDrawer: React.FC = () => {
                 </div>
               ))
             )}
+            </div>
           </div>
 
           {cart.length > 0 && (

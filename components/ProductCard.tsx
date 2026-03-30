@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Product } from '../types';
-import { Heart, Eye, X, Check, ShoppingCart, Minus, Plus, MessageCircle, ArrowRightLeft } from 'lucide-react';
+import { Heart, Eye, X, Check, ShoppingCart, Minus, Plus, MessageCircle, ArrowRightLeft, Zap, TrendingUp, ShieldAlert } from 'lucide-react';
 import { optimizeImage } from '../constants';
 import Link from 'next/link';
 
@@ -43,6 +43,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Pseudo-dynamic stock logic (consistent for each product)
+  const productHash = product.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const stockLevel = (productHash % 8) + 2; // 2 to 9
+  const isSellingFast = productHash % 3 === 0;
+  const isHighlyRated = productHash % 5 === 0;
 
   const galleryImages = [
     product.image,
@@ -143,6 +149,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             decoding="async"
             className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-125 transition-transform duration-700 ease-in-out" 
           />
+          
+          {/* Urgency Badge */}
+          <div className="absolute top-2 left-2 flex flex-col gap-1.5 pointer-events-none">
+             {stockLevel <= 4 && (
+               <div className="bg-white/90 backdrop-blur-sm border border-orange-100 text-orange-600 px-2 py-1 rounded-md text-[9px] font-black uppercase tracking-tighter shadow-sm flex items-center gap-1 animate-pulse">
+                  <Zap size={10} fill="currentColor" /> Only {stockLevel} pieces left!
+               </div>
+             )}
+             {isSellingFast && (
+                <div className="bg-[#333399] text-white px-2 py-1 rounded-md text-[9px] font-black uppercase tracking-tighter shadow-sm flex items-center gap-1">
+                   <TrendingUp size={10} /> Selling Fast
+                </div>
+             )}
+          </div>
+
+          {/* LR Verified Badge */}
+          <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-500">
+             <div className="bg-white border border-gray-100 px-2 py-1 rounded-md text-[8px] font-black uppercase tracking-tight text-gray-400 flex items-center gap-1 shadow-sm">
+                <Check size={10} className="text-[#333399]" /> LR inspected
+             </div>
+          </div>
           
           {/* Quick View Button Overlay */}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 backdrop-blur-[1px]">

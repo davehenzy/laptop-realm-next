@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CartDrawer from '@/components/CartDrawer';
 import CheckoutModal from '@/components/CheckoutModal';
+import RecentSales from '@/components/RecentSales';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -44,6 +45,7 @@ export default function RootLayout({
           <Footer />
           <CartDrawer />
           <CheckoutModal />
+          <RecentSales />
         </AppProvider>
       </body>
     </html>
