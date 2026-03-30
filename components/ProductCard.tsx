@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Product } from '../types';
-import { Heart, Eye, X, Check, ShoppingCart, Minus, Plus, MessageCircle, ArrowRightLeft, Zap, TrendingUp, ShieldAlert } from 'lucide-react';
+import { Heart, Eye, X, Check, ShoppingCart, Minus, Plus, MessageCircle, ArrowRightLeft, Zap, TrendingUp, ShieldAlert, Cpu, HardDrive, Layout } from 'lucide-react';
 import { optimizeImage } from '../constants';
 import Link from 'next/link';
 
@@ -183,6 +183,26 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                <Eye size={16} />
                Quick View
              </button>
+          </div>
+
+          {/* Quick Specs Bar */}
+          <div className="absolute bottom-0 left-0 right-0 p-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
+             <div className="bg-[#333399]/90 backdrop-blur-md rounded-lg p-1.5 flex items-center justify-around text-white shadow-lg border border-white/20">
+                <div className="flex flex-col items-center gap-0.5">
+                   <Cpu size={12} className="text-[#fbbf24]" />
+                   <span className="text-[8px] font-black uppercase tracking-tighter">{product.specs?.os?.split(' ')[0] || 'Core i7'}</span>
+                </div>
+                <div className="w-px h-6 bg-white/20" />
+                <div className="flex flex-col items-center gap-0.5">
+                   <Layout size={12} className="text-[#fbbf24]" />
+                   <span className="text-[8px] font-black uppercase tracking-tighter">{product.specs?.ram || '16GB'}</span>
+                </div>
+                <div className="w-px h-6 bg-white/20" />
+                <div className="flex flex-col items-center gap-0.5">
+                   <HardDrive size={12} className="text-[#fbbf24]" />
+                   <span className="text-[8px] font-black uppercase tracking-tighter">{product.specs?.storageCapacity || '512GB'}</span>
+                </div>
+             </div>
           </div>
         </div>
 
